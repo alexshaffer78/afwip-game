@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+.venv-*/
+
+# Local venv sentinel
+.afwip-ready
+
+# PyInstaller build outputs (the source tree ships web/dist + models, which ARE tracked)
+/build/
+/dist/
+.build-venv/
+
+# OS / editor
+.DS_Store
+*.log
+
+# Recorded games (optional trajectory saves)
+data/trajectories/
