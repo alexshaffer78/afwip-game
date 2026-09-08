@@ -20,7 +20,10 @@ from PyInstaller.utils.hooks import collect_all, copy_metadata
 _ROOT = _os.path.abspath(_os.path.join(SPECPATH, ".."))
 _SCRIPT = _os.path.join(SPECPATH, "afwip_desktop.py")
 
-datas = [(_os.path.join(_ROOT, "web", "dist"), "web/dist")]  # UI+art -> _MEIPASS/web/dist
+datas = [
+    (_os.path.join(_ROOT, "web", "dist"), "web/dist"),  # UI+art -> _MEIPASS/web/dist
+    (_os.path.join(_ROOT, "models"), "models"),          # trained AI opponents -> _MEIPASS/models
+]
 binaries = []
 hiddenimports = []
 

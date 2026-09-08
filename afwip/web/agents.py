@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import os
 import random
+import sys
 from pathlib import Path
 from typing import Any, Callable, Optional, Protocol
 
@@ -25,10 +26,16 @@ _OBS_KEYS = ("scalars", "own_tokens", "enemy_tokens", "own_squadrons",
 
 
 def _models_dir() -> Path:
-    """Where the exported <difficulty>_{us,prc}.onnx files live (repo-root
-    `models/` by default; override with AFWIP_MODELS_DIR)."""
+    """Where the exported <difficulty>_{us,prc}.onnx files live. Override with
+    AFWIP_MODELS_DIR; when frozen by PyInstaller the `models/` tree is bundled
+    under sys._MEIPASS; from source it sits at the repo root."""
     env = os.environ.get("AFWIP_MODELS_DIR")
-    return Path(env) if env else Path(__file__).resolve().parents[2] / "models"
+    if env:
+        return Path(env)
+    if getattr(sys, "frozen", False):
+        base = Path(getattr(sys, "_MEIPASS", Path(sys.executable).resolve().parent))
+        return base / "models"
+    return Path(__file__).resolve().parents[2] / "models"
 
 
 class Agent(Protocol):
