@@ -66,28 +66,41 @@ you don't have to re-paste it; clear it there any time.
 Two people on the same Wi-Fi / LAN can play one game on two devices, each seeing
 only their own side's fog of war.
 
-1. On the **host** machine, start the server so other devices can reach it:
+1. On the **host** machine, start the server in network mode:
 
    ```bash
-   python -m afwip.web --host 0.0.0.0
+   python -m afwip.web --lan
    ```
 
-   (or `./run.sh --host 0.0.0.0`)
+   (or `./run.sh --lan`). This prints the exact URL to share, e.g.:
 
-2. Find the host's LAN IP address:
-   - macOS: `ipconfig getifaddr en0`
-   - Windows: `ipconfig` (look for IPv4 Address)
-   - Linux: `hostname -I`
+   ```
+   ────────────────────────────────────────────
+    AFWIP is hosting a game on your network.
+      On THIS computer:            http://127.0.0.1:8000
+      Share with the other player: http://192.168.1.42:8000
+   ────────────────────────────────────────────
+   ```
 
-3. **Host:** open <http://127.0.0.1:8000>, choose **Two Players (network)**,
+   (`--lan` is shorthand for `--host 0.0.0.0`. If the URL can't be detected,
+   look up the host's IP with `ipconfig getifaddr en0` on macOS, `ipconfig` on
+   Windows, or `hostname -I` on Linux.)
+
+2. **Host:** open the *On THIS computer* URL, choose **Two Players (network)**,
    pick your side, and **Start Game**. Note the **game code** shown at the top.
 
-4. **Other player:** on their device, open `http://<host-ip>:8000`, enter the
-   **game code**, choose the other side, and **Join Game**.
+3. **Other player:** on their device, open the *Share with the other player*
+   URL, enter the **game code**, choose the other side, and **Join Game**.
 
 Moves sync automatically within a second or two. Each device can only act for
-its own side. (This is classroom-grade: anyone on your network who has the game
-code can join — don't expose the port to the open internet.)
+its own side.
+
+**If they can't connect** despite the same Wi-Fi: guest networks and many
+university/office networks block device-to-device traffic, and a firewall or VPN
+on the host can too. The simplest fix is to have the host turn on a **phone
+hotspot** and put both devices on it. (This is classroom-grade — anyone on your
+network who has the game code can join, so don't expose the port to the open
+internet.)
 
 ---
 
