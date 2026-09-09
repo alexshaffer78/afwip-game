@@ -160,31 +160,6 @@ def create_app() -> FastAPI:
                 raise HTTPException(status_code=400, detail=str(e))
         return session.state()
 
-    @app.get("/api/games/{game_id}/trajectory")
-    def get_trajectory(game_id: str) -> dict:
-        """The recorded decision tape (finalized against the current state — a
-        mid-game snapshot before the game ends, the full record after). 404 if
-        this game is not being recorded."""
-        session = get_session(game_id)
-        traj = session.build_trajectory()
-        if traj is None:
-            raise HTTPException(status_code=404,
-                                detail=f"game '{game_id}' is not recording a trajectory")
-        return traj.to_dict()
-
-    @app.post("/api/games/{game_id}/trajectory/save")
-    def save_trajectory(game_id: str) -> dict:
-        """Explicitly write the recorded tape to disk (the user chose to keep
-        this game). Nothing is saved automatically. 404 if not recording."""
-        session = get_session(game_id)
-        with lock:
-            path = session.save_trajectory()
-        if path is None:
-            raise HTTPException(status_code=404,
-                                detail=f"game '{game_id}' is not recording a trajectory")
-        return {"game_id": game_id, "saved": str(path),
-                "decisions": len(session.trajectory.tape)}
-
     @app.delete("/api/games/{game_id}")
     def delete_game(game_id: str) -> dict:
         with lock:
