@@ -66,13 +66,15 @@ you don't have to re-paste it; clear it there any time.
 Two people on the same Wi-Fi / LAN can play one game on two devices, each seeing
 only their own side's fog of war.
 
-1. On the **host** machine, start the server in network mode:
+1. On the **host** machine, start the server in network mode **from a terminal**:
 
-   ```bash
-   python -m afwip.web --lan
-   ```
+   - **macOS / Linux:** `./run.sh --lan`
+   - **Windows:** `run.bat --lan` — in Command Prompt or PowerShell (in
+     PowerShell use `.\run.bat --lan`). Don't *double-click* it: that starts
+     single-device mode, because double-clicking can't pass the `--lan` flag.
+   - **Any OS**, if Python is already on your PATH: `python -m afwip.web --lan`
 
-   (or `./run.sh --lan`). This prints the exact URL to share, e.g.:
+   This prints the exact URL to share, e.g.:
 
    ```
    ────────────────────────────────────────────
@@ -97,10 +99,11 @@ its own side.
 
 **If they can't connect** despite the same Wi-Fi: guest networks and many
 university/office networks block device-to-device traffic, and a firewall or VPN
-on the host can too. The simplest fix is to have the host turn on a **phone
-hotspot** and put both devices on it. (This is classroom-grade — anyone on your
-network who has the game code can join, so don't expose the port to the open
-internet.)
+on the host can too. **On Windows, allow the Firewall prompt** ("Private
+networks") the first time you host — otherwise the other device can't reach you.
+The simplest fallback is to have the host turn on a **phone hotspot** and put
+both devices on it. (This is classroom-grade — anyone on your network who has
+the game code can join, so don't expose the port to the open internet.)
 
 ---
 
